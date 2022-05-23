@@ -17,16 +17,22 @@ public class NoticeboardController {
     private final NoticeboardRepository noticeboardRepository;
 
     private final NoticeboardService noticeboardService;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @PostMapping("/api/noticeboards/")
+    @PostMapping("/api/noticeboards")
     public Noticeboard creatNoticeboard(@RequestBody NoticeboardRequestDto requestDto){
         Noticeboard noticeboard = new Noticeboard(requestDto);
         return noticeboardRepository.save(noticeboard);
     }
 
-    @GetMapping("/api/noticeboards/")
+    @GetMapping("/api/noticeboards")
     public List<Noticeboard> readNoticeboard(){
         return noticeboardRepository.findAllByOrderByModifiedAtDesc();
+    }
+
+    @GetMapping("/api/noticeboards/{id}")
+    public NoticeboardRequestDto detailNoticeboard(@PathVariable Long id){
+        return noticeboardService.findById(id);
     }
 
     @PutMapping("/api/noticeboards/{id}")
