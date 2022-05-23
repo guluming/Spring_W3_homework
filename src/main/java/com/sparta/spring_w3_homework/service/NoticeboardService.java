@@ -14,6 +14,7 @@ public class NoticeboardService {
 
     private final NoticeboardRepository noticeboardRepository;
 
+    //게시글 수정
     @Transactional
     public Long update(Long id, NoticeboardRequestDto requestDto){
         Noticeboard noticeboard = noticeboardRepository.findById(id).orElseThrow(
@@ -21,5 +22,14 @@ public class NoticeboardService {
         );
         noticeboard.update(requestDto);
         return noticeboard.getId();
+    }
+
+    //게시글 상세 정보
+    @Transactional
+    public NoticeboardRequestDto findById(Long id){
+        Noticeboard noticeboard = noticeboardRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 게시글 입니다")
+        );
+        return new NoticeboardRequestDto();
     }
 }
