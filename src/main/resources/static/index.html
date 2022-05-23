@@ -25,6 +25,15 @@
 
     <style>
 
+        .background-body {
+            position: fixed;
+            z-index: -1;
+            top: 428px;
+            height: 100%;
+            width: 100%;
+            background-color: #4ea93c;
+        }
+
         .mainBox {
             width: 100%;
             height: 400px;
@@ -44,11 +53,6 @@
             /*font-family: 'Black Han Sans', sans-serif;*/
         }
 
-        /*.mainBox > p2 {*/
-        /*    color: aquamarine;*/
-        /*    font-family: 'Jua', sans-serif;*/
-        /*}*/
-
         .buttonBox {
             text-align: center;
         }
@@ -56,6 +60,16 @@
         .buttonBox button {
             margin: 0 10px;
             font-family: 'Jua', sans-serif;
+        }
+
+        .table {
+            margin-left:auto;
+            margin-right:auto;
+
+        }
+
+        .section {
+            background-color: #4ea93c;
         }
 
         /*.mainBox{position:relative; width:100%; height:300px; text-align:center;}*/
@@ -87,39 +101,137 @@
 
     <script>
 
+        // 사용자가 내용을 올바르게 입력하였는지 확인(제목, 내용, 작성자명, 비밀번호 순서)
+        function isValidtitle(title) {
+            if (title == '') {
+                alert('제목을 입력해주세요');
+                return false;
+            }
+            if (title.trim().length > 40) {
+                alert('제목은 공백 포함 40자 이하로 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        function isValidContents(contents) {
+            if (contents == '') {
+                alert('항해일지를 입력해주세요');
+                return false;
+            }
+            if (contents.trim().length > 1000) {
+                alert('항해일지는 공백 포함 1000자 이하로 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        function isValidusername(username) {
+            if (username == '') {
+                alert('작성자를 입력해주세요');
+                return false;
+            }
+            if (username.trim().length > 10) {
+                alert('작성자는 공백 포함 10자 이하로 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        function isValidpassword(password) {
+            if (password == '') {
+                alert('비밀번호를 입력해주세요');
+                return false;
+            }
+            if (password.trim().length > 10) {
+                alert('비밀번호는 공백 포함 10자 이하로 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function () {
+            // HTML 문서를 로드할 때마다 실행합니다.
+            getNoticeboard();
+        })
+
+        function getNoticeboard() {
+            // 1. 기존 메모 내용을 지웁니다.
+            $('#posts-box').empty();
+            // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            $.ajax({
+                type: 'GET',
+                url: '/api/noticeboards',
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        let memo = response[i];
+                        let id = memo.id;
+                        let title = memo.title;
+                        let username = memo.username;
+                        let modifiedAt = memo.modifiedAt;
+                        addHTML(id, title, username, modifiedAt);
+                    }
+                }
+            })
+        }
+
+        function addHTML(id, title, username, modifiedAt) {
+            // 1. HTML 태그를 만듭니다.
+            let temphtml = `<tr>
+                                <th style="width: 300px">${modifiedAt}</th>
+                                <td id="${id}-title"><a href="/board/view">${title}</a></td>
+                                <td id="${id}-username" style="width: 200px">${username}</td>
+                            </tr>`
+            // 2. #posts-box 에 HTML을 붙인다.
+            $('#posts-box').append(temphtml);
+        }
+
+        function writeNotice() {
+            // 1. 작성한 메모를 불러옵니다.
+            let title = $('#title').val();
+            let contents = $('#contents').val();
+            let username = $('#username').val();
+            let password = $('#password').val();
+            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            if (isValidtitle(title) == false) {
+                return;
+            }
+            if (isValidContents(contents) == false) {
+                return;
+            }
+            if (isValidusername(username) == false) {
+                return;
+            }
+            if (isValidpassword(password) == false) {
+                return;
+            }
+            // 3. 전달할 data JSON으로 만듭니다.
+            let data = {'title': title, 'contents': contents, 'username': username, 'password': password};
+            // 4. POST /api/memos 에 data를 전달합니다.
+            $.ajax({
+                type: "POST",
+                url: "/api/noticeboards",
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('항해일지가 성공적으로 작성되었습니다.');
+                    window.location.reload();
+                }
+            });
+        }
+
+
     </script>
 
 </head>
 <body>
 
+<div class="background-body">
+
+</div>
+
 <div id="wrap">
-    <!-- bulma -->
-<!--    <nav class="navbar" role="navigation" aria-label="main navigation">-->
-<!--        <div class="navbar-brand">-->
-<!--            <a class="navbar-item" href="#">-->
-<!--            </a>-->
-
-<!--            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"-->
-<!--               data-target="navbarBasicExample">-->
-<!--                <span aria-hidden="true"></span>-->
-<!--                <span aria-hidden="true"></span>-->
-<!--                <span aria-hidden="true"></span>-->
-<!--            </a>-->
-<!--        </div>-->
-
-<!--        <div id="navbarBasicExample" class="navbar-menu">-->
-<!--            <div class="navbar-end">-->
-<!--                <div class="navbar-item">-->
-<!--                    <div class="buttons">-->
-<!--                        <button class="button is-primary-light" onclick="sign_out()">로그아웃</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-
-    <!-- main -->
-
     <div class="mainBox">
         <p1 class="title is-1" style="font-size: 100px">
             <span style="text-shadow: -3px 0 #ffffff, 0 3px #ffffff, 3px 0 #ffffff, 0 -3px #ffffff;">나만의 항해99 블로그</span>
@@ -135,39 +247,35 @@
     <!--            <div class="columns">-->
     <!--            </div>-->
     <section class="section">
-        <div id="post-box" class="container row row-cols-1 row-cols-md-4 g-4" style="margin: 0 auto;">
+<!--        <div id="post-box" class="container row row-cols-1 row-cols-md-4 g-4" style="margin: 0 auto;">-->
 
             <!-- 포스트들 뿌려지는 곳 -->
-            <table class="table">
+            <table class="table" style="width: 80%;">
                 <thead>
                 <tr>
                     <th>작 성 날 짜</th>
                     <th>제 목</th>
                     <th>작 성 자</th>
-                    <th><abbr title="Won">W</abbr></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="posts-box">
                 <tr>
-                    <th>1</th>
-                    <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
+                    <th style="width: 300px">1</th>
+                    <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a>
                     </td>
-                    <td>38</td>
-                    <td>23</td>
+                    <td style="width: 200px">38</td>
                 </tr>
                 <tr>
                     <th>2</th>
                     <td><a href="https://en.wikipedia.org/wiki/Arsenal_F.C." title="Arsenal F.C.">Arsenal</a></td>
                     <td>38</td>
-                    <td>20</td>
                 </tr>
                 </tbody>
             </table>
             <!-- 포스트들 뿌려지는 곳 -->
 
-        </div>
+<!--        </div>-->
     </section>
-
     <section class="section">
         <div class="modal" id="modal-post">
             <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
@@ -182,7 +290,7 @@
                                     </div>
                                 </div>
                                 <p class="control">
-                                        <textarea id="contents" class="textarea" style="height: 330px" placeholder="항해일지를 작성해주세요"></textarea>
+                                    <textarea id="contents" class="textarea" style="height: 330px" placeholder="항해일지를 작성해주세요"></textarea>
                                 </p>
                             </div>
                             <nav class="level is-mobile">
@@ -194,30 +302,24 @@
                                         <div>
                                             <input id="password" class="input" style="margin-left: 10px" type="text" placeholder="비밀번호 입력">
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="level-right">
-
                                     <div class="level-item">
-                                        <a class="button is-sparta" onclick="post()">저장</a>
+                                        <a class="button is-sparta" onclick="writeNotice()">저장</a>
                                     </div>
                                     <div class="level-item">
-                                        <a class="button is-sparta is-outlined"
-                                           onclick='$("#modal-post").removeClass("is-active")'>취소</a>
+                                        <a class="button is-sparta is-outlined" onclick='$("#modal-post").removeClass("is-active")'>취소</a>
                                     </div>
-
                                 </div>
                             </nav>
                         </div>
                     </article>
                 </div>
             </div>
-            <button class="modal-close is-large" aria-label="close"
-                    onclick='$("#modal-post").removeClass("is-active")'></button>
+            <button class="modal-close is-large" aria-label="close" onclick='$("#modal-post").removeClass("is-active")'></button>
         </div>
     </section>
-
 </div>
 
 </body>
