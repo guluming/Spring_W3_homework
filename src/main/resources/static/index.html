@@ -2,53 +2,221 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나만의 항해 블로그(feat.백엔드 서버)</title>
 
-<!--    CSS부분-->
+    <!--    CSS부분-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
-<!--    js부분-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<!--    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+
+    <!--    js부분-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
+
+        .mainBox {
+            width: 100%;
+            height: 400px;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('https://static.spartacodingclub.kr/media/main_carousel/xzp9hk1o96nbakca.png');
+            background-position: center;
+            background-size: cover;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mainBox > p1 {
+            color: #20a44e;
+            /*font-family: 'Black Han Sans', sans-serif;*/
+        }
+
+        /*.mainBox > p2 {*/
+        /*    color: aquamarine;*/
+        /*    font-family: 'Jua', sans-serif;*/
+        /*}*/
+
+        .buttonBox {
+            text-align: center;
+        }
+
+        .buttonBox button {
+            margin: 0 10px;
+            font-family: 'Jua', sans-serif;
+        }
+
+        /*.mainBox{position:relative; width:100%; height:300px; text-align:center;}*/
+        /*.mainBox::after{content:""; position:absolute; top:0; left:0; z-index:-1; opacity:.8; width:100%; height:300px; background: url('https://static.spartacodingclub.kr/media/main_carousel/xzp9hk1o96nbakca.png') center right / cover;}*/
+        /*.mainBox h3{padding-top:100px; font-size:40px; font-weight:700; color:#000;}*/
+        /*.mainBox p*/
+        /*    font-size: 3em;*/
+        /*    font-weight:700;*/
+        /*    color:#000;*/
+
+        /*.blind {*/
+        /*    display: none;*/
+        /*}*/
+
+        /*.columns {*/
+        /*    padding: 20px 10px;*/
+        /*}*/
+
+        /*.columns > column {*/
+        /*    text-align: center;*/
+        /*}*/
+
+        /*.columns > column img {*/
+        /*    width: 100%;*/
+        /*    max-width: 300px;*/
+        /*}*/
 
     </style>
 
     <script>
 
     </script>
+
 </head>
 <body>
 
+<div id="wrap">
+    <!-- bulma -->
+<!--    <nav class="navbar" role="navigation" aria-label="main navigation">-->
+<!--        <div class="navbar-brand">-->
+<!--            <a class="navbar-item" href="#">-->
+<!--            </a>-->
 
+<!--            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"-->
+<!--               data-target="navbarBasicExample">-->
+<!--                <span aria-hidden="true"></span>-->
+<!--                <span aria-hidden="true"></span>-->
+<!--                <span aria-hidden="true"></span>-->
+<!--            </a>-->
+<!--        </div>-->
 
-<div id="cards-box" class="area-read">
+<!--        <div id="navbarBasicExample" class="navbar-menu">-->
+<!--            <div class="navbar-end">-->
+<!--                <div class="navbar-item">-->
+<!--                    <div class="buttons">-->
+<!--                        <button class="button is-primary-light" onclick="sign_out()">로그아웃</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
 
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                Component
-            </p>
-            <button class="card-header-icon" aria-label="more options">
-      <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
+    <!-- main -->
+
+    <div class="mainBox">
+        <p1 class="title is-1" style="font-size: 100px">
+            <span style="text-shadow: -3px 0 #ffffff, 0 3px #ffffff, 3px 0 #ffffff, 0 -3px #ffffff;">나만의 항해99 블로그</span>
+        </p1>
+        <div class="buttonBox">
+            <button class="button is-primary is-rounded is-large" style="width: 270px" onclick='$("#modal-post").addClass("is-active")'>
+                <span style="text-shadow: -2px 0 #000000, 0 2px #000000, 2px 0 #000000, 0 -2px #000000; color: aqua">항해일지 작성</span>
             </button>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
         </div>
-        <footer class="card-footer">
-            <a href="#" class="card-footer-item">Save</a>
-            <a href="#" class="card-footer-item">Edit</a>
-            <a href="#" class="card-footer-item">Delete</a>
-        </footer>
     </div>
+
+    <!-- content -->
+    <!--            <div class="columns">-->
+    <!--            </div>-->
+    <section class="section">
+        <div id="post-box" class="container row row-cols-1 row-cols-md-4 g-4" style="margin: 0 auto;">
+
+            <!-- 포스트들 뿌려지는 곳 -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>작 성 날 짜</th>
+                    <th>제 목</th>
+                    <th>작 성 자</th>
+                    <th><abbr title="Won">W</abbr></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>1</th>
+                    <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
+                    </td>
+                    <td>38</td>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td><a href="https://en.wikipedia.org/wiki/Arsenal_F.C." title="Arsenal F.C.">Arsenal</a></td>
+                    <td>38</td>
+                    <td>20</td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- 포스트들 뿌려지는 곳 -->
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="modal" id="modal-post">
+            <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
+            <div class="modal-content" style="height: 50%;" >
+                <div class="box">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="field">
+                                <div class="field">
+                                    <div class="control">
+                                        <input id="title" class="input" type="text" placeholder="제목을 입력해주세요">
+                                    </div>
+                                </div>
+                                <p class="control">
+                                        <textarea id="contents" class="textarea" style="height: 330px" placeholder="항해일지를 작성해주세요"></textarea>
+                                </p>
+                            </div>
+                            <nav class="level is-mobile">
+                                <div class="level-left">
+                                    <div class="input-group mb-3" >
+                                        <div>
+                                            <input id="username" class="input" type="text" placeholder="작성자명">
+                                        </div>
+                                        <div>
+                                            <input id="password" class="input" style="margin-left: 10px" type="text" placeholder="비밀번호 입력">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="level-right">
+
+                                    <div class="level-item">
+                                        <a class="button is-sparta" onclick="post()">저장</a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a class="button is-sparta is-outlined"
+                                           onclick='$("#modal-post").removeClass("is-active")'>취소</a>
+                                    </div>
+
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"
+                    onclick='$("#modal-post").removeClass("is-active")'></button>
+        </div>
+    </section>
 
 </div>
 
