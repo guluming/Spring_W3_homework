@@ -9,8 +9,7 @@ public class NoticeboardRequestDto {
     private String username;
     private String title;
     private String contents;
-    private int password;
-    private char deleteYn;
+    private String password;
 
     public Noticeboard toEntity(){
         return Noticeboard.builder()
@@ -18,7 +17,6 @@ public class NoticeboardRequestDto {
                 .title(title)
                 .contents(contents)
                 .password(password)
-                .deleteYn(deleteYn)
                 .build();
     }
 }
