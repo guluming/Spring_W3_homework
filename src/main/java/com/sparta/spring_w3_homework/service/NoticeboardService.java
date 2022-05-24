@@ -32,10 +32,17 @@ public class NoticeboardService {
         return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
     }
 
+    //게시물 전체 조회(삭제후)
+    public List<NoticeboardResponseDto> findAllByDeleteYn(char deleteYn){
+        Sort sort = Sort.by(Sort.Direction.DESC, "id", "createdDate");
+        List<Noticeboard> list = noticeboardRepository.findAllByDeleteYn(deleteYn, sort);
+        return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
+    }
+
     //게시글 수정
     @Transactional
-    public Long update(final Long id, final NoticeboardRequestDto params){
-        Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 사용자 입니다."));
+    public Long update(Long id, NoticeboardRequestDto params){
+        Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 게시글 입니다."));
         entity.update(params.getUsername(), params.getTitle(), params.getContents());
         return id;
     }
@@ -47,6 +54,7 @@ public class NoticeboardService {
         return new NoticeboardResponseDto(entity);
     }
 
+    //게시글 삭제
     @Transactional
     public Long delete(Long id){
         Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(()->new NullPointerException("존재하지 않는 게시글 입니다."));
