@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/board")
 public class NoticeboardPageController {
 
+    //상세 페이지
     @GetMapping("/view/{id}")
     public String openNoticeview(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
         return "board/view";
     }
 
-//    @GetMapping("/edit")
-//    public String openNoticeedit() {
-//        return "board/edit";
-//    }
+    //수정 페이지
+    @GetMapping("/edit/{id}")
+    public String openNoticeedit(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
+        return "board/edit";
+    }
 }
