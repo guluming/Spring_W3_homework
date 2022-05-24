@@ -6,6 +6,7 @@ import com.sparta.spring_w3_homework.domain.NoticeboardRequestDto;
 import com.sparta.spring_w3_homework.domain.NoticeboardResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,17 +27,17 @@ public class NoticeboardService {
     }
 
     //게시글 전체 조회
-    public List<NoticeboardResponseDto> findAll(){
-        Sort sort = Sort.by(Sort.Direction.DESC, "id", "modifiedDate");
-        List<Noticeboard> list = noticeboardRepository.findAll(sort);
-        return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
-    }
+//    public List<NoticeboardResponseDto> findAll(){
+//        Sort sort = Sort.by(Direction.DESC, "id", "modifiedDate");
+//        List<Noticeboard> list = noticeboardRepository.findAll(sort);
+//        return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
+//    }
 
-    //게시물 전체 조회(삭제후)
-    public List<NoticeboardResponseDto> findAllByDeleteYn(char deleteYn){
-        Sort sort = Sort.by(Sort.Direction.DESC, "id", "createdDate");
-        List<Noticeboard> list = noticeboardRepository.findAllByDeleteYn(deleteYn, sort);
-        return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
+    //게시글 상세 정보
+    @Transactional
+    public NoticeboardResponseDto findById(Long id){
+        Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 게시글 입니다."));
+        return new NoticeboardResponseDto(entity);
     }
 
     //게시글 수정
@@ -47,18 +48,20 @@ public class NoticeboardService {
         return id;
     }
 
-    //게시글 상세 정보
-    @Transactional
-    public NoticeboardResponseDto findById(Long id){
-        Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 게시글 입니다."));
-        return new NoticeboardResponseDto(entity);
-    }
-
     //게시글 삭제
     @Transactional
     public Long delete(Long id){
-        Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(()->new NullPointerException("존재하지 않는 게시글 입니다."));
-        entity.delete();
+        noticeboardRepository.deleteById(id);
         return id;
+    }
+
+    //비밀번호 확인
+    public boolean checkPw(Long id, NoticeboardRequestDto params){
+        Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 게시글 입니다."));
+        if(params.getPassword().equals(entity.getPassword())){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
