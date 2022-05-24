@@ -11,10 +11,9 @@ public class NoticeboardResponseDto {
     private String username;
     private String title;
     private String contents;
-    private int password;
-    private char deleteYn;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private String password;
+//    private LocalDateTime createdDate;
+//    private LocalDateTime modifiedDate;
 
     public NoticeboardResponseDto(Noticeboard entity){
         this.id = entity.getId();
@@ -22,8 +21,7 @@ public class NoticeboardResponseDto {
         this.title = entity.getTitle();
         this.contents = entity.getContents();
         this.password = entity.getPassword();
-        this.deleteYn = entity.getDeleteYn();
-        this.createdDate = entity.getCreatedDate();
-        this.modifiedDate = entity.getModifiedDate();
+//        this.createdDate = entity.getCreatedDate();
+//        this.modifiedDate = entity.getModifiedDate();
     }
 }
