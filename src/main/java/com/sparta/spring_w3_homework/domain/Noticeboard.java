@@ -22,31 +22,24 @@ public class Noticeboard extends Timestamped {
 
     private String contents;
 
-    private int password;
+    private String password;
 
-    private char deleteYn;
-
-    private LocalDateTime createdDate;
-
-    private LocalDateTime modifiedDate = LocalDateTime.now();
+//    private LocalDateTime createdDate;
+//
+//    private LocalDateTime modifiedDate = LocalDateTime.now();
 
     @Builder
-    public Noticeboard(String username, String title, String contents, int password, char deleteYn) {
+    public Noticeboard(String username, String title, String contents, String password) {
         this.username = username;
         this.title = title;
         this.contents = contents;
         this.password = password;
-        this.deleteYn = deleteYn;
     }
 
     public void update(String username, String title, String contents){
         this.username = username;
         this.title = title;
         this.contents = contents;
-        this.modifiedDate = LocalDateTime.now();
-    }
-
-    public void delete(){
-        this.deleteYn = 'Y';
+//        this.modifiedDate = LocalDateTime.now();
     }
 }
