@@ -137,18 +137,19 @@
             // 2. 메모 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
-                url: '/api/noticeboards',
+                url: '/api/noticeboards?deleteYn=N',
                 success: function (response) {
+                    console.log(response);
+
                     for (let i = 0; i < response.length; i++) {
                         let notice = response[i];
                         let id = notice.id;
                         let title = notice.title;
                         let username = notice.username;
-                        let password = notice.password;
-                        let modifiedDate = notice.modifiedDate;
+                        let createdDate = notice.createdDate;
 
                         let temphtml = `<tr>
-                                            <th style="width: 300px">${modifiedDate}</th>
+                                            <th style="width: 300px">${createdDate}</th>
                                             <td id="${id}-title"><a href="/board/view/${id}">${title}</a></td>
                                             <td id="${id}-username" style="width: 200px">${username}</td>
                                         </tr>`
@@ -165,6 +166,7 @@
             let contents = $('#contents').val();
             let username = $('#username').val();
             let password = $('#password').val();
+            let deleteYn = 'N';
             // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
             if (isValidtitle(title) == false) {
                 return;
@@ -179,7 +181,7 @@
                 return;
             }
             // 3. 전달할 data JSON으로 만듭니다.
-            let data = {'title': title, 'contents': contents, 'username': username, 'password': password};
+            let data = {'title': title, 'contents': contents, 'username': username, 'password': password, 'deleteYn':deleteYn};
             // 4. POST /api/noticeboards 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
