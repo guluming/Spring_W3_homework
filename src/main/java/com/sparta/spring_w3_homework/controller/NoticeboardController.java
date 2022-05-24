@@ -4,6 +4,7 @@ package com.sparta.spring_w3_homework.controller;
 import com.sparta.spring_w3_homework.domain.Noticeboard;
 import com.sparta.spring_w3_homework.domain.NoticeboardRepository;
 import com.sparta.spring_w3_homework.domain.NoticeboardRequestDto;
+import com.sparta.spring_w3_homework.domain.NoticeboardResponseDto;
 import com.sparta.spring_w3_homework.service.NoticeboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api")
 public class NoticeboardController {
 
     private final NoticeboardRepository noticeboardRepository;
@@ -19,31 +21,33 @@ public class NoticeboardController {
     private final NoticeboardService noticeboardService;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @PostMapping("/api/noticeboards")
-    public Noticeboard creatNoticeboard(@RequestBody NoticeboardRequestDto requestDto){
-        Noticeboard noticeboard = new Noticeboard(requestDto);
-        return noticeboardRepository.save(noticeboard);
+    //저장
+    @PostMapping("/noticeboards")
+    public Long save(@RequestBody NoticeboardRequestDto params){
+        return noticeboardService.save(params);
     }
 
-    @GetMapping("/api/noticeboards")
-    public List<Noticeboard> readNoticeboard(){
-        return noticeboardRepository.findAllByOrderByModifiedAtDesc();
+    //게시글 전체 조회
+    @GetMapping("/noticeboards")
+    public List<NoticeboardResponseDto> findAll(){
+        return noticeboardService.findAll();
     }
 
-    @GetMapping("/api/noticeboards/{id}")
-    public NoticeboardRequestDto detailNoticeboard(@PathVariable Long id){
+    //게시글 수정
+    @PatchMapping("/noticeboards/{id}")
+    public Long update(@PathVariable Long id, @RequestBody NoticeboardRequestDto params){
+        return noticeboardService.update(id, params);
+    }
+
+    //게시글 상세 조회
+    @GetMapping("/noticeboards/{id}")
+    public NoticeboardResponseDto findById(@PathVariable Long id){
         return noticeboardService.findById(id);
     }
 
-    @PutMapping("/api/noticeboards/{id}")
-    public Long updateNoticeboard(@PathVariable Long id, @RequestBody NoticeboardRequestDto requestDto){
-        noticeboardService.update(id, requestDto);
-        return id;
-    }
-
-    @DeleteMapping("/api/noticeboards/{id}")
-    public Long deleteNoticeboard(@PathVariable Long id){
-        noticeboardRepository.deleteById(id);
-        return id;
+    //게시글 삭제
+    @DeleteMapping("/noticeboards/{id}")
+    public Long delete(@PathVariable Long id){
+        return noticeboardService.delete(id);
     }
 }
