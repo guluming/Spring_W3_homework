@@ -72,31 +72,6 @@
             background-color: #4ea93c;
         }
 
-        /*.mainBox{position:relative; width:100%; height:300px; text-align:center;}*/
-        /*.mainBox::after{content:""; position:absolute; top:0; left:0; z-index:-1; opacity:.8; width:100%; height:300px; background: url('https://static.spartacodingclub.kr/media/main_carousel/xzp9hk1o96nbakca.png') center right / cover;}*/
-        /*.mainBox h3{padding-top:100px; font-size:40px; font-weight:700; color:#000;}*/
-        /*.mainBox p*/
-        /*    font-size: 3em;*/
-        /*    font-weight:700;*/
-        /*    color:#000;*/
-
-        /*.blind {*/
-        /*    display: none;*/
-        /*}*/
-
-        /*.columns {*/
-        /*    padding: 20px 10px;*/
-        /*}*/
-
-        /*.columns > column {*/
-        /*    text-align: center;*/
-        /*}*/
-
-        /*.columns > column img {*/
-        /*    width: 100%;*/
-        /*    max-width: 300px;*/
-        /*}*/
-
     </style>
 
     <script>
@@ -165,26 +140,23 @@
                 url: '/api/noticeboards',
                 success: function (response) {
                     for (let i = 0; i < response.length; i++) {
-                        let memo = response[i];
-                        let id = memo.id;
-                        let title = memo.title;
-                        let username = memo.username;
-                        let modifiedAt = memo.modifiedAt;
-                        addHTML(id, title, username, modifiedAt);
+                        let notice = response[i];
+                        let id = notice.id;
+                        let title = notice.title;
+                        let username = notice.username;
+                        let password = notice.password;
+                        let modifiedDate = notice.modifiedDate;
+
+                        let temphtml = `<tr>
+                                            <th style="width: 300px">${modifiedDate}</th>
+                                            <td id="${id}-title"><a href="/board/view/${id}">${title}</a></td>
+                                            <td id="${id}-username" style="width: 200px">${username}</td>
+                                        </tr>`
+                        // 2. #posts-box 에 HTML을 붙인다.
+                        $('#posts-box').append(temphtml);
                     }
                 }
             })
-        }
-
-        function addHTML(id, title, username, modifiedAt) {
-            // 1. HTML 태그를 만듭니다.
-            let temphtml = `<tr>
-                                <th style="width: 300px">${modifiedAt}</th>
-                                <td id="${id}-title"><a href="/board/view">${title}</a></td>
-                                <td id="${id}-username" style="width: 200px">${username}</td>
-                            </tr>`
-            // 2. #posts-box 에 HTML을 붙인다.
-            $('#posts-box').append(temphtml);
         }
 
         function writeNotice() {
@@ -208,7 +180,7 @@
             }
             // 3. 전달할 data JSON으로 만듭니다.
             let data = {'title': title, 'contents': contents, 'username': username, 'password': password};
-            // 4. POST /api/memos 에 data를 전달합니다.
+            // 4. POST /api/noticeboards 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
                 url: "/api/noticeboards",
@@ -243,11 +215,7 @@
         </div>
     </div>
 
-    <!-- content -->
-    <!--            <div class="columns">-->
-    <!--            </div>-->
     <section class="section">
-<!--        <div id="post-box" class="container row row-cols-1 row-cols-md-4 g-4" style="margin: 0 auto;">-->
 
             <!-- 포스트들 뿌려지는 곳 -->
             <table class="table" style="width: 80%;">
@@ -274,8 +242,8 @@
             </table>
             <!-- 포스트들 뿌려지는 곳 -->
 
-<!--        </div>-->
     </section>
+
     <section class="section">
         <div class="modal" id="modal-post">
             <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
@@ -320,7 +288,7 @@
             <button class="modal-close is-large" aria-label="close" onclick='$("#modal-post").removeClass("is-active")'></button>
         </div>
     </section>
-</div>
 
+</div>
 </body>
 </html>
