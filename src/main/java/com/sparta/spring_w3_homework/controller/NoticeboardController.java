@@ -1,25 +1,24 @@
 package com.sparta.spring_w3_homework.controller;
 
+import java.util.List;
 
-import com.sparta.spring_w3_homework.domain.Noticeboard;
-import com.sparta.spring_w3_homework.domain.NoticeboardRepository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.bind.annotation.*;
+
 import com.sparta.spring_w3_homework.domain.NoticeboardRequestDto;
 import com.sparta.spring_w3_homework.domain.NoticeboardResponseDto;
 import com.sparta.spring_w3_homework.service.NoticeboardService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class NoticeboardController {
 
-    private final NoticeboardRepository noticeboardRepository;
-
     private final NoticeboardService noticeboardService;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //저장
     @PostMapping("/noticeboards")
@@ -29,13 +28,17 @@ public class NoticeboardController {
 
     //게시글 전체 조회
     @GetMapping("/noticeboards")
-    public List<NoticeboardResponseDto> findAll(){
-        return noticeboardService.findAll();
+    public List<NoticeboardResponseDto> findAll(@RequestParam char deleteYn){
+        return noticeboardService.findAllByDeleteYn(deleteYn);
     }
 
     //게시글 수정
     @PatchMapping("/noticeboards/{id}")
     public Long update(@PathVariable Long id, @RequestBody NoticeboardRequestDto params){
+
+//        noticeboardService.update(id, params);
+//        return id;
+
         return noticeboardService.update(id, params);
     }
 
