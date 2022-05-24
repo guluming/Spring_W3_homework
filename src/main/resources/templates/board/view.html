@@ -38,55 +38,79 @@
             background-color: #4ea93c;
         }
 
-        .media-content {
-            width: 70%;
-            height: 500px;
+        .posts-box{
 
-            margin-top: 100px;
-            margin-left:auto;
-            margin-right:auto;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+        }
+
+        .card{
+            width: 50%;
+        }
+
+        .card-content{
+            height: 500px;
+        }
+
+        .contents > label{
+            position: absolute;
+            bottom: 60px;
         }
 
     </style>
 
     <script>
-
         $(document).ready(function () {
             // HTML 문서를 로드할 때마다 실행합니다.
             getNotice();
         })
 
-        function getNotice(id) {
+        function getNotice() {
             // 1. 기존 메모 내용을 지웁니다.
-            //$('#posts-box').empty();
+            $('#posts-box').empty();
+            const id = [[ ${id} ]];
             // 2. 메모 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
-                url: '/api/noticeboards/{id}',
+                url: `/api/noticeboards/${id}`,
                 success: function (response) {
-                    for (let i = 0; i < response.length; i++) {
-                        let memo = response[i];
-                        let id = memo.id;
-                        let title = memo.title;
-                        let contents = memo.contents;
-                        let username = memo.username;
-                        let modifiedAt = memo.modifiedAt;
-                        addHTML(id, title, contents, username, modifiedAt);
-                    }
+                    let id = response.id;
+                    let title = response.title;
+                    let contents = response.contents;
+                    let username = response.username;
+                    let modifiedDate = response.modifiedDate;
+                    addHTML(id, title, contents, username, modifiedDate);
+                    // for (let i = 0; i < response.length; i++) {
+                    // }
                 }
             })
         }
 
-        // function addHTML(id, title, contents, username, modifiedAt) {
-        //     // 1. HTML 태그를 만듭니다.
-        //     let temphtml = `<tr>
-        //                         <th>${modifiedAt}</th>
-        //                         <td id="${id}-title"><a href="#">${title}</a></td>
-        //                         <td id="${id}-username">${username}</td>
-        //                     </tr>`
-        //     // 2. #posts-box 에 HTML을 붙인다.
-        //     $('#posts-box').append(temphtml);
-        // }
+        function addHTML(id, title, contents, username, modifiedDate) {
+            // 1. HTML 태그를 만듭니다.
+            let temphtml = `<div class="card">
+                                <div class="card-content">
+                                    <div class="contents">
+                                        <p1 class="title is-3">제  목 : ${title}</p1><br><br>
+                                        <p2 class="subtitle is-5">작성자 : ${username}</p2><br><br>
+                                         내  용 : ${contents}
+                                        <br><br>
+                                        <label>마지막 수정일 : ${modifiedDate}</label>
+                                    </div>
+                                </div>
+                                <footer class="card-footer">
+                                    <a href="/" class="card-footer-item">뒤로가기</a>
+                                    <a href="#" class="card-footer-item">수정</a>
+                                    <a href="#" onclick="" class="card-footer-item">삭제</a>
+                                </footer>
+                            </div>`
+            // 2. #posts-box 에 HTML을 붙인다.
+            $('#posts-box').append(temphtml);
+        }
 
     </script>
 
@@ -101,47 +125,25 @@
 
 </div>
 
-<div class="media-content">
-    <div class="field">
-        <div class="field">
-            <div class="control">
-                <input id="title" class="input" type="text" placeholder="제목을 입력해주세요">
+<div id="posts-box" class="posts-box">
+
+    <div class="card">
+        <div class="card-content">
+            <div class="contents">
+                <p1 class="title is-3">여기에 제목</p1><br><br>
+                <p2 class="subtitle is-5">작성자 : 여기에 작성자</p2><br><br>
+                여기에 내용이 들어갑니다.여기에 내용이 들어갑니다.여기에 내용이 들어갑니다.여기에 내용이 들어갑니다.여기에 내용이 들어갑니다.여기에 내용이 들어갑니다.여기에 내용이 들어갑니다.
+                <br><br>
+                <label>마지막 수정일 : "여기에 날짜"</label>
             </div>
         </div>
-        <p class="control">
-            <textarea id="contents" class="textarea" style="height: 330px" placeholder="항해일지를 작성해주세요"></textarea>
-        </p>
+        <footer class="card-footer">
+            <a href="/" class="card-footer-item">뒤로가기</a>
+            <a href="#" class="card-footer-item">수정</a>
+            <a href="#" class="card-footer-item">삭제</a>
+        </footer>
     </div>
-    <nav class="level is-mobile">
-        <div class="level-left">
-            <div class="level-left">
-                <div>
-                    <input id="username" class="input" type="text" placeholder="작성자명">
-                </div>
-                <div>
-                    <input id="password" class="input" style="margin-left: 10px" type="text" placeholder="비밀번호 입력">
-                </div>
 
-            </div>
-        </div>
-        <div class="level-right">
-
-            <div class="level-item" type="textarea">
-                <p>날짜 2022-05-29</p>
-            </div>
-            <div class="level-item">
-                <a class="button is-sparta" onclick="updateNotice()">수정</a>
-            </div>
-            <div class="level-item">
-                <a class="button is-sparta" onclick="deleteNotice()">삭제</a>
-            </div>
-            <div class="level-item">
-                <a class="button is-sparta" href="/" onclick="">취소</a>
-            </div>
-
-        </div>
-    </nav>
 </div>
-
 </body>
 </html>
