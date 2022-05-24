@@ -26,7 +26,7 @@ public class Noticeboard extends Timestamped {
 
     private char deleteYn;
 
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
 
     private LocalDateTime modifiedDate = LocalDateTime.now();
 
@@ -38,19 +38,6 @@ public class Noticeboard extends Timestamped {
         this.password = password;
         this.deleteYn = deleteYn;
     }
-
-//    public Noticeboard(NoticeboardRequestDto requestDto) {
-//        this.username = requestDto.getUsername();
-//        this.title = requestDto.getTitle();
-//        this.contents = requestDto.getContents();
-//        this.password = requestDto.getPassword();
-//    }
-
-//    public void update(NoticeboardRequestDto requestDto){
-//        this.username = requestDto.getUsername();
-//        this.title = requestDto.getTitle();
-//        this.contents = requestDto.getContents();
-//    }
 
     public void update(String username, String title, String contents){
         this.username = username;
