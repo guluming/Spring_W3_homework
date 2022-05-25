@@ -37,17 +37,8 @@ public class NoticeboardController {
 
     //게시글 전체 조회
     @GetMapping("/noticeboards")
-    public List<Noticeboard> findAll(){
-
-        //어제
-        LocalDateTime startDatetime = LocalDateTime.now().minusDays(1);
-
-        //오늘
-        LocalDateTime endDatetime = LocalDateTime.now();
-
-        return noticeboardRepository.findAllByModifiedAtBetweenOrderByModifiedAtDesc(startDatetime, endDatetime);
-
-//        return noticeboardService.findAll();
+    public List<NoticeboardResponseDto> findAll(){
+        return noticeboardService.findAll();
     }
 
     //게시글 상세 조회
