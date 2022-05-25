@@ -3,6 +3,9 @@ package com.sparta.spring_w3_homework.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Noticeboard extends Timestamped {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,8 +28,10 @@ public class Noticeboard extends Timestamped {
 
     private String password;
 
+    @CreatedDate
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
 //    private LocalDateTime createdDate;
