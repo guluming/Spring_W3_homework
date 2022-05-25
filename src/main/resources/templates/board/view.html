@@ -56,14 +56,34 @@
             height: 500px;
         }
 
-        .contents > label{
+        .password{
             position: absolute;
             bottom: 60px;
+        }
+
+        .password > input{
+            position: absolute;
+            right: -600px;
         }
 
     </style>
 
     <script>
+
+        function isValidpassword(password) {
+            if (password == '') {
+                alert('비밀번호를 입력해주세요');
+                return false;
+            }
+            if (password.trim().length > 10) {
+                alert('비밀번호는 공백 포함 10자 이하로 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         $(document).ready(function () {
             // HTML 문서를 로드할 때마다 실행합니다.
             getNotice();
@@ -85,7 +105,7 @@
                     let title = response.title;
                     let contents = response.contents;
                     let username = response.username;
-                    let ModifiedAt = response.ModifiedAt;
+                    let modifiedAt = response.modifiedAt;
 
                     let temphtml = `<div class="card">
                                         <div class="card-content">
@@ -94,7 +114,10 @@
                                                 <p2 class="subtitle is-5">작성자 : ${username}</p2><br><br>
                                                  내  용 : ${contents}
                                                 <br><br>
-                                                <label>마지막 수정일 : ${ModifiedAt}</label>
+                                                <div class="password">
+                                                    <label>마지막 수정일 : ${modifiedAt}</label>
+                                                    <input id="${id}-password" placeholder="비밀번호"></input>
+                                                </div>
                                             </div>
                                         </div>
                                         <footer class="card-footer">
@@ -113,10 +136,19 @@
 
             const id = [[ ${id} ]];
 
+            let password = $(`#${id}-password`).val();
+
+            if (isValidpassword(password) == false) {
+                return;
+            }
+
+            let data = {'password': password};
             // 1. DELETE /api/noticeboards/{id} 에 요청해서 게시글을 삭제합니다.
             $.ajax({
                 type: "DELETE",
                 url: `/api/noticeboards/${id}`,
+                data: JSON.stringify(data),
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
                 success: function (response) {
                     alert("항해일지 삭제가 완료되었습니다.");
                     window.location.href='/';
