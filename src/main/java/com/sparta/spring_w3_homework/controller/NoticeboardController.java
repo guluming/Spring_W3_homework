@@ -2,7 +2,6 @@ package com.sparta.spring_w3_homework.controller;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sparta.spring_w3_homework.domain.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api")
 public class NoticeboardController extends Timestamped {
-
-    private final NoticeboardRepository noticeboardRepository;
 
     private final NoticeboardService noticeboardService;
 
