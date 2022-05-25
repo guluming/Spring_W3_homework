@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +28,11 @@ public class NoticeboardService {
     }
 
     //게시글 전체 조회
-//    public List<NoticeboardResponseDto> findAll(){
-//        Sort sort = Sort.by(Direction.DESC, "id", "modifiedDate");
-//        List<Noticeboard> list = noticeboardRepository.findAll(sort);
-//        return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
-//    }
+    public List<NoticeboardResponseDto> findAll(){
+        Sort sort = Sort.by(Direction.DESC, "modifiedAt");
+        List<Noticeboard> list = noticeboardRepository.findAll(sort);
+        return list.stream().map(NoticeboardResponseDto::new).collect(Collectors.toList());
+    }
 
     //게시글 상세 정보
     @Transactional
