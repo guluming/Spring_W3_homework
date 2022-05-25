@@ -1,9 +1,6 @@
 package com.sparta.spring_w3_homework.service;
 
-import com.sparta.spring_w3_homework.domain.Noticeboard;
-import com.sparta.spring_w3_homework.domain.NoticeboardRepository;
-import com.sparta.spring_w3_homework.domain.NoticeboardRequestDto;
-import com.sparta.spring_w3_homework.domain.NoticeboardResponseDto;
+import com.sparta.spring_w3_homework.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -16,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class NoticeboardService {
+public class NoticeboardService extends Timestamped {
 
     private final NoticeboardRepository noticeboardRepository;
 

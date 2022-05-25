@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class NoticeboardRequestDto {
+public class NoticeboardRequestDto extends Timestamped {
     private String username;
     private String title;
     private String contents;

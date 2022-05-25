@@ -1,27 +1,20 @@
 package com.sparta.spring_w3_homework.controller;
 
-import java.sql.SQLOutput;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sparta.spring_w3_homework.domain.Noticeboard;
-import com.sparta.spring_w3_homework.domain.NoticeboardRepository;
-import org.springframework.ui.Model;
+import com.sparta.spring_w3_homework.domain.*;
 import org.springframework.web.bind.annotation.*;
 
-import com.sparta.spring_w3_homework.domain.NoticeboardRequestDto;
-import com.sparta.spring_w3_homework.domain.NoticeboardResponseDto;
 import com.sparta.spring_w3_homework.service.NoticeboardService;
 
 import lombok.RequiredArgsConstructor;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
-public class NoticeboardController {
+public class NoticeboardController extends Timestamped {
 
     private final NoticeboardRepository noticeboardRepository;
 
