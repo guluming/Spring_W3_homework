@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="나만의 항해 블로그">
+    <meta property="og:description" content="항해하면서 생긴 당신만의 항해일지를 기록해주세요!">
+    <meta property="og:image" content="images/og_noticeboard.png">
+
     <title>나만의 항해 블로그(feat.백엔드 서버)</title>
 
     <!--    CSS부분-->
@@ -137,7 +142,7 @@
             // 2. 메모 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
-                url: '/api/noticeboards?deleteYn=N',
+                url: '/api/noticeboards',
                 success: function (response) {
                     console.log(response);
 
@@ -146,10 +151,10 @@
                         let id = notice.id;
                         let title = notice.title;
                         let username = notice.username;
-                        let ModifiedAt = notice.ModifiedAt;
+                        let modifiedAt = notice.modifiedAt;
 
                         let temphtml = `<tr>
-                                            <th style="width: 300px">${ModifiedAt}</th>
+                                            <th style="width: 300px">${modifiedAt}</th>
                                             <td id="${id}-title"><a href="/board/view/${id}">${title}</a></td>
                                             <td id="${id}-username" style="width: 200px">${username}</td>
                                         </tr>`
@@ -260,7 +265,7 @@
                                     </div>
                                 </div>
                                 <p class="control">
-                                    <textarea id="contents" class="textarea" style="height: 330px" placeholder="항해일지를 작성해주세요"></textarea>
+                                    <textarea id="contents" class="textarea" style="height: 320px" placeholder="항해일지를 작성해주세요"></textarea>
                                 </p>
                             </div>
                             <nav class="level is-mobile">
