@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface NoticeboardRepository extends JpaRepository<Noticeboard, Long> {
-    List<Noticeboard> findAllByModifiedAtBetweenOrderByModifiedAtDesc(LocalDateTime startDatetime, LocalDateTime endDatetime);
+    //List<Noticeboard> findAllByModifiedAtBetweenOrderByModifiedAtDesc(LocalDateTime startDatetime, LocalDateTime endDatetime);
 }
