@@ -19,7 +19,7 @@ public class NoticeboardController extends Timestamped {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //저장
+    //게시글 저장
     @PostMapping("/noticeboards")
     public Long save(@RequestBody NoticeboardRequestDto params){
         return noticeboardService.save(params);

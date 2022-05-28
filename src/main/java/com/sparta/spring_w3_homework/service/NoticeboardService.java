@@ -51,7 +51,7 @@ public class NoticeboardService extends Timestamped {
         noticeboardRepository.deleteById(id);
         return id;
     }
-
+    
     //비밀번호 확인
     public boolean checkPw(Long id, NoticeboardRequestDto params){
         Noticeboard entity = noticeboardRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 게시글 입니다."));
